@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+  <style>
+    img {
+      background-color: antiquewhite;
+      width: 400px;
+      height: 400px;
+    }
+  </style>
+  <body>
+    <img src="" alt="" />
+  </body>
+  <script>
+    let imgChange = document.querySelector("img");
+
+    const BASE_URL = "https://dog.ceo/api/breeds/image/random";
+
+    const axiosInstance = axios.create({
+      baseURL: BASE_URL,
+      timeout: 1000,
+    });
+
+    const network = {
+      getAll: async (url) => {
+        let responseData = [];
+        await axiosInstance.get(`${url}`).then((res) => {
+          responseData = res.data;
+        });
+
+        return responseData;
+      },
+    };
+
+    setInterval(() => {
+      network.getAll().then((data) => {
+        imgChange.src = data.message;
+      });
+    }, 2000);
+  </script>
+</html>
